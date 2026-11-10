@@ -1,9 +1,18 @@
-/// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          data: ['@supabase/supabase-js', '@tanstack/react-query'],
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     VitePWA({
@@ -33,8 +42,4 @@ export default defineConfig({
       },
     }),
   ],
-  test: {
-    include: ['src/**/*.test.ts'],
-    environment: 'node',
-  },
 });

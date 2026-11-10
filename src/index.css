@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    min-height: 100dvh;
+    overscroll-behavior-y: none;
+  }
+  h1, h2, h3 {
+    @apply font-extrabold;
+    letter-spacing: -0.025em;
+  }
+  h1 { letter-spacing: -0.03em; }
+  :focus-visible {
+    outline: 3px solid #2453C7;
+    outline-offset: 2px;
+  }
+  input, select, textarea {
+    @apply text-ink;
+  }
+}
+
+@layer components {
+  /* Every number and score: JetBrains Mono with aligned figures. */
+  .num {
+    @apply font-mono;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-btn border-2 border-ink px-5 font-bold text-ink transition-transform;
+    min-height: 48px;
+    touch-action: manipulation;
+  }
+  .btn:active:not(:disabled) { transform: translateY(1px) scale(0.99); }
+  .btn:disabled { @apply cursor-not-allowed opacity-40; }
+  .btn-primary { @apply btn bg-ball; }
+  .btn-secondary { @apply btn bg-surface; }
+  .btn-ghost {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-bold text-court;
+    min-height: 40px;
+  }
+
+  .card { @apply rounded-[20px] border-2 border-ink bg-surface; }
+  .panel { @apply rounded-[20px] border border-line bg-surface; }
+
+  .field {
+    @apply w-full rounded-2xl border-2 border-ink bg-surface px-4 py-3 text-base;
+    min-height: 48px;
+  }
+  .label { @apply mb-1.5 block text-sm font-bold; }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-surface px-3 py-1 text-xs font-extrabold uppercase;
+    letter-spacing: 0.04em;
+  }
+  .chip-ball { @apply chip bg-ball; }
+  .chip-ink { @apply chip bg-ink text-white; }
+
+  /* Small yellow ball with ink outline: who is serving. */
+  .ball-dot {
+    @apply inline-block shrink-0 rounded-full border-2 border-ink bg-ball;
+    width: 12px;
+    height: 12px;
+  }
+
+  /* The blue court card with thin white inset lines. */
+  .court-card {
+    @apply relative overflow-hidden rounded-[22px] bg-court text-white;
+    isolation: isolate;
+  }
+  .court-card::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .court-card::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 50%;
+    width: 1.5px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.75);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .segmented { @apply grid grid-flow-col auto-cols-fr gap-1 rounded-btn border-2 border-ink bg-surface p-1; }
+  .segmented > button {
+    @apply rounded-2xl px-3 py-2 text-sm font-bold;
+    min-height: 40px;
+  }
+  .segmented > button[aria-pressed='true'] { @apply bg-ink text-white; }
+}
+
+@layer utilities {
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .px-safe {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+}
+
+@keyframes rally-pop {
+  0% { transform: scale(0.94); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.pop { animation: rally-pop 180ms ease-out; }
+
+@keyframes rally-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.sheet-in { animation: rally-up 200ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pop, .sheet-in { animation: none; }
+  .btn { transition: none; }
+}
