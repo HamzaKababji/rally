@@ -26,7 +26,7 @@ function MetaEditor({ match }: { match: MatchRow }) {
       <h2 id="meta-h" className="text-xl">
         Details
       </h2>
-      <div className="mt-3 grid grid-cols-2 gap-3">
+      <div className="mt-3 grid gap-3">
         <label>
           <span className="label">Date</span>
           <input type="date" className="field num" value={playedOn} onChange={(e) => setPlayedOn(e.target.value)} />
@@ -240,7 +240,7 @@ export function MatchDetailScreen() {
             </h2>
             <p className="text-sm text-muted">The score is rebuilt from this list. Newest first.</p>
           </div>
-          <button className="btn-secondary min-h-[40px] px-3 text-sm" onClick={() => setAddingSet(true)}>
+          <button className="btn-secondary min-h-[40px] shrink-0 whitespace-nowrap px-3 text-sm" onClick={() => setAddingSet(true)}>
             + Set score
           </button>
         </div>

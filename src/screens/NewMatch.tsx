@@ -215,7 +215,7 @@ export function NewMatchScreen() {
         </details>
 
         <Section title="When & where">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid gap-3">
             <label>
               <span className="label">Date</span>
               <input type="date" className="field num" value={playedOn} onChange={(e) => setPlayedOn(e.target.value)} />

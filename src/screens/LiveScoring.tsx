@@ -54,7 +54,12 @@ function CourtCard({ state, match, nameOf }: { state: MatchState; match: MatchRo
   const deuce = state.side === 'deuce';
   return (
     <section className="court-card px-6 pb-6 pt-5" aria-label="Current game">
-      <p className="text-center text-sm font-bold uppercase tracking-[0.12em] text-white/85">{state.isComplete ? 'Final' : call}</p>
+      <p className="text-center">
+        {/* Solid backing so the court's centre line doesn't run through the label. */}
+        <span className="inline-block rounded-full bg-court px-3 text-sm font-bold uppercase tracking-[0.12em] text-white/90">
+          {state.isComplete ? 'Final' : call}
+        </span>
+      </p>
       <div className="mt-1 grid grid-cols-2 items-end">
         {(['A', 'B'] as Team[]).map((t) => (
           <div key={t} className="flex flex-col items-center px-2">
@@ -73,7 +78,7 @@ function CourtCard({ state, match, nameOf }: { state: MatchState; match: MatchRo
         ))}
       </div>
       {!state.isComplete && serverName && (
-        <div className="mt-5 grid grid-cols-[1fr_auto] items-center gap-3 rounded-2xl bg-white/10 px-4 py-3">
+        <div className="mt-5 grid grid-cols-[1fr_auto] items-center gap-3 rounded-2xl border border-white/30 bg-court-dark px-4 py-3">
           <div className="min-w-0 text-sm">
             <p className="flex items-center gap-2 truncate font-bold">
               <span className="ball-dot" /> {serverName} serves
