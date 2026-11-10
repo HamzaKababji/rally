@@ -51,19 +51,17 @@ On first open Rally asks **"Who are you?"**. With an empty database you can tap 
 
 ## 3. Deploy to Vercel
 
-1. Push this repo to GitHub (or GitLab/Bitbucket):
+**Live:** <https://rally-swart-three.vercel.app>, auto-deployed from `main` on GitHub (`HamzaKababji/rally`). Every push to `main` redeploys production.
 
-   ```bash
-   git remote add origin git@github.com:<you>/rally.git
-   git push -u origin main
-   ```
+To set it up from scratch:
 
-2. On <https://vercel.com> click **Add New → Project** and import the repo. Vercel detects Vite, so the defaults (`npm run build`, output `dist`) are right.
-3. Under **Environment Variables**, add both:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-4. Click **Deploy**. `vercel.json` already has the SPA rewrite, so deep links like `/m/<id>` work.
-   If you add or change env vars later, **redeploy**. Vite bakes them in at build time.
+1. Push this repo to GitHub.
+2. On <https://vercel.com>, **Add New → Project** and import the repo. Vercel detects Vite, and the defaults (`npm run build`, output `dist`) are correct.
+3. Under **Environment Variables**, add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (the publishable key).
+   - Pick the **Config** (plain) type, not **Secret**, and tick all three environments. These values are public anyway, because Vite bundles them into the client JS. Vercel may default to Secret, which can't be edited later and doesn't allow a `VITE_` variable in Development. To fix one, delete the variable, re-add it as Config, and redeploy.
+   - Development only matters for `vercel dev`. Local `npm run dev` reads `.env.local`.
+4. **Deploy.** `vercel.json` rewrites every path to `index.html`, so deep links like `/m/<id>` and `/leaderboard` load directly. Static files such as `/sw.js` and the icons are still served as files.
+   After adding or changing env vars, **redeploy**. Vite bakes them in at build time.
 
 ### Put it on everyone's phone
 
